@@ -25,6 +25,48 @@ from strings import get_string
 
 from config import styled_button
 
+
+def _make_start_text_pm(_, mention, bot_mention, UP=None, DISK=None, CPU=None, RAM=None):
+    """Super premium private start message with gorgeous blockquotes and premium custom emojis."""
+    return (
+        f'<tg-emoji emoji-id="6124902618574625426">👑</tg-emoji> <b>Welcome to the Future of Music Streaming!</b>\n\n'
+        f"<blockquote>"
+        f'<tg-emoji emoji-id="5413694143601842851">👋</tg-emoji> ʜᴇʏ {mention},\n'
+        f"ɪ ᴀᴍ <b>{bot_mention}</b> — your ultimate high-fidelity premium music assistant."
+        f"</blockquote>\n\n"
+        f"<blockquote>"
+        f'<tg-emoji emoji-id="6125239923831217642">✨</tg-emoji> <b>Premium Features Enabled</b>\n'
+        f'• <tg-emoji emoji-id="5814498932591432312">🔊</tg-emoji> Ultra HD 320kbps Audio Quality\n'
+        f'• <tg-emoji emoji-id="5271721134889395048">🎥</tg-emoji> Lag-Free 1080p Video Streaming\n'
+        f'• <tg-emoji emoji-id="6124898345082165755">⚡</tg-emoji> Instant Play & Zero Buffering\n'
+        f'• <tg-emoji emoji-id="5251203410396458957">🛡️</tg-emoji> Anti-Crash Protection Active'
+        f"</blockquote>\n\n"
+        f"<blockquote>"
+        f'<tg-emoji emoji-id="5814498932591432312">🎧</tg-emoji> <b>Supports:</b> YouTube • Spotify • Apple Music • Soundcloud • Index/M3u8 Links'
+        f"</blockquote>\n"
+    )
+
+
+
+
+
+
+def _make_start_text_group(_, bot_mention, uptime):
+    """Rich group start message with blockquotes."""
+    return (
+        f"<b>🎵 {bot_mention} — Premium Music Bot</b>\n\n"
+        f"<blockquote>"
+        f"✨ High-quality music streaming in your Voice Chat.\n"
+        f"Supports YouTube • Spotify • Apple Music • SoundCloud • Telegram files."
+        f"</blockquote>\n\n"
+        f"<blockquote>"
+        f"⚡ Uptime: <code>{uptime}</code>\n"
+        f"🎶 Ready to play music in this group!"
+        f"</blockquote>\n\n"
+        f"<i>Use the buttons below to get started 👇</i>"
+    )
+
+
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
@@ -103,17 +145,20 @@ async def start_pm(client, message: Message, _):
         if name == "start":
             out = private_panel(_)
             UP, CPU, RAM, DISK = await bot_sys_stats()
+            caption = _make_start_text_pm(
+                _, message.from_user.mention, app.mention, UP, DISK, CPU, RAM
+            )
             try:
                 await message.reply_photo(
                     photo=config.START_IMG_URL,
-                    caption=_["start_2"].format(message.from_user.mention, app.mention, UP, DISK, CPU, RAM),
+                    caption=caption,
                     reply_markup=InlineKeyboardMarkup(out),
                     message_effect_id=5159385139981059251,
                 )
             except:
                 await message.reply_photo(
                     photo=config.START_IMG_URL,
-                    caption=_["start_2"].format(message.from_user.mention, app.mention, UP, DISK, CPU, RAM),
+                    caption=caption,
                     reply_markup=InlineKeyboardMarkup(out),
                 )
             if await is_on_off(2):
@@ -124,17 +169,20 @@ async def start_pm(client, message: Message, _):
     else:
         out = private_panel(_)
         UP, CPU, RAM, DISK = await bot_sys_stats()
+        caption = _make_start_text_pm(
+            _, message.from_user.mention, app.mention, UP, DISK, CPU, RAM
+        )
         try:
             await message.reply_photo(
                 photo=config.START_IMG_URL,
-                caption=_["start_2"].format(message.from_user.mention, app.mention, UP, DISK, CPU, RAM),
+                caption=caption,
                 reply_markup=InlineKeyboardMarkup(out),
                 message_effect_id=5159385139981059251,
             )
         except:
             await message.reply_photo(
                 photo=config.START_IMG_URL,
-                caption=_["start_2"].format(message.from_user.mention, app.mention, UP, DISK, CPU, RAM),
+                caption=caption,
                 reply_markup=InlineKeyboardMarkup(out),
             )
         if await is_on_off(2):
@@ -148,17 +196,18 @@ async def start_pm(client, message: Message, _):
 async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
+    caption = _make_start_text_group(_, app.mention, get_readable_time(uptime))
     try:
         await message.reply_photo(
             photo=config.START_IMG_URL,
-            caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
+            caption=caption,
             reply_markup=InlineKeyboardMarkup(out),
             message_effect_id=5159385139981059251,
         )
     except:
         await message.reply_photo(
             photo=config.START_IMG_URL,
-            caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
+            caption=caption,
             reply_markup=InlineKeyboardMarkup(out),
         )
     return await add_served_chat(message.chat.id)
@@ -190,27 +239,23 @@ async def welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
+                uptime = 0
+                try:
+                    uptime = int(time.time() - _boot_)
+                except:
+                    pass
+                caption = _make_start_text_group(_, app.mention, get_readable_time(uptime))
                 try:
                     await message.reply_photo(
                         photo=config.START_IMG_URL,
-                        caption=_["start_3"].format(
-                            message.from_user.first_name,
-                            app.mention,
-                            message.chat.title,
-                            app.mention,
-                        ),
+                        caption=caption,
                         reply_markup=InlineKeyboardMarkup(out),
                         message_effect_id=5159385139981059251,
                     )
                 except:
                     await message.reply_photo(
                         photo=config.START_IMG_URL,
-                        caption=_["start_3"].format(
-                            message.from_user.first_name,
-                            app.mention,
-                            message.chat.title,
-                            app.mention,
-                        ),
+                        caption=caption,
                         reply_markup=InlineKeyboardMarkup(out),
                     )
                 await add_served_chat(message.chat.id)

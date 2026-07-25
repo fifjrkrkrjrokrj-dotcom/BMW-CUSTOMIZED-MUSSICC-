@@ -78,11 +78,37 @@ async def settings_back_markup(client, CallbackQuery: CallbackQuery, _):
         await app.resolve_peer(OWNER_ID)
         OWNER = OWNER_ID
         buttons = private_panel(_)
-        UP, CPU, RAM, DISK = await bot_sys_stats()
-        return await CallbackQuery.edit_message_text(
-            _["start_2"].format(CallbackQuery.from_user.mention, app.mention, UP, DISK, CPU, RAM),
-            reply_markup=InlineKeyboardMarkup(buttons),
+        caption = (
+            f'<tg-emoji emoji-id="6124902618574625426">👑</tg-emoji> <b>Welcome to the Future of Music Streaming!</b>\n\n'
+            f"<blockquote>"
+            f'<tg-emoji emoji-id="5413694143601842851">👋</tg-emoji> ʜᴇʏ {CallbackQuery.from_user.mention},\n'
+            f"ɪ ᴀᴍ <b>{app.mention}</b> — your ultimate high-fidelity premium music assistant."
+            f"</blockquote>\n\n"
+            f"<blockquote>"
+            f'<tg-emoji emoji-id="6125239923831217642">✨</tg-emoji> <b>Premium Features Enabled</b>\n'
+            f'• <tg-emoji emoji-id="5814498932591432312">🔊</tg-emoji> Ultra HD 320kbps Audio Quality\n'
+            f'• <tg-emoji emoji-id="5271721134889395048">🎥</tg-emoji> Lag-Free 1080p Video Streaming\n'
+            f'• <tg-emoji emoji-id="6124898345082165755">⚡</tg-emoji> Instant Play & Zero Buffering\n'
+            f'• <tg-emoji emoji-id="5251203410396458957">🛡️</tg-emoji> Anti-Crash Protection Active'
+            f"</blockquote>\n\n"
+            f"<blockquote>"
+            f'<tg-emoji emoji-id="5814498932591432312">🎧</tg-emoji> <b>Supports:</b> YouTube • Spotify • Apple Music • Soundcloud • Index/M3u8 Links'
+            f"</blockquote>\n"
         )
+        try:
+            return await CallbackQuery.edit_message_text(
+                caption,
+                reply_markup=InlineKeyboardMarkup(buttons),
+            )
+        except Exception:
+            try:
+                return await CallbackQuery.message.edit_caption(
+                    caption=caption,
+                    reply_markup=InlineKeyboardMarkup(buttons),
+                )
+            except Exception:
+                pass
+
     else:
         buttons = setting_markup(_)
         return await CallbackQuery.edit_message_reply_markup(

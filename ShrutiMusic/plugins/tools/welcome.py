@@ -113,26 +113,30 @@ async def greet_group(_, member: ChatMemberUpdated):
         )
         
         # ✅ Fixed caption: removed unsupported <blockquote> tags
-        caption = f"""
-🌟 <b>ᴡᴇʟᴄᴏᴍᴇ {user.mention}!</b>
+        caption = (
+            f"✨ <b>˹ ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ɢʀᴏᴜᴘ ˼</b>\n\n"
+            f"<blockquote>"
+            f"👋 <b>ʜᴇʏ {user.mention}!</b>\n"
+            f"ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ <b>{member.chat.title}</b>."
+            f"</blockquote>\n\n"
+            f"<blockquote>"
+            f"👤 <b>ᴜsᴇʀ:</b> {user.first_name}\n"
+            f"🆔 <b>ɪᴅ:</b> <code>{user.id}</code>\n"
+            f"🏷 <b>ᴜsᴇʀɴᴀᴍᴇ:</b> @{username_display}"
+            f"</blockquote>\n\n"
+            f"<blockquote>"
+            f"🤝 <b>ʀᴇsᴘᴇᴄᴛ ᴛʜᴇ ʀᴜʟᴇs & sᴛᴀʏ ᴀᴄᴛɪᴠᴇ</b>\n"
+            f"ʜᴀᴠᴇ ᴀ ɢʀᴇᴀᴛ ᴛɪᴍᴇ ʜᴇʀᴇ! ❤️"
+            f"</blockquote>"
+        )
 
-📋 <b>ɢʀᴏᴜᴘ:</b> {member.chat.title}
-🆔 <b>ʏᴏᴜʀ ɪᴅ:</b> <code>{user.id}</code>
-👤 <b>ᴜsᴇʀɴᴀᴍᴇ:</b> @{username_display}
-
-✨ ᴛʜᴀɴᴋ ʏᴏᴜ ғᴏʀ ᴊᴏɪɴɪɴɢ <b>{member.chat.title}</b>!
-🤝 ᴍᴀᴋᴇ ɴᴇᴡ ғʀɪᴇɴᴅs, ᴄʜᴀᴛ ᴡɪᴛʜ ᴏᴛʜᴇʀs, ᴀɴᴅ ᴇɴᴊᴏʏ ᴛʜᴇ ᴄᴏᴍᴍᴜɴɪᴛʏ.
-
-📢 <b>ᴅᴏɴ'ᴛ ғᴏʀɢᴇᴛ ᴛᴏ ᴊᴏɪɴ @XTR_Net</b>
-
-💎 ʀᴇsᴘᴇᴄᴛ ᴛʜᴇ ʀᴜʟᴇs • sᴛᴀʏ ᴀᴄᴛɪᴠᴇ • ʜᴀᴠᴇ ғᴜɴ ❤️
-"""
-
-        # All three buttons in PRIMARY style
         reply_markup = InlineKeyboardMarkup([
-            [styled_button("🎵 ᴀᴅᴅ ᴍᴇ ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ 🎵", url=f"https://t.me/{app.username}?startgroup=True", style=enums.ButtonStyle.PRIMARY)],
-            [styled_button("⟪ #𝗫𝗧𝗥 ⟫ 𝗡𝗘𝗧", url="https://t.me/xtrchannel", style=enums.ButtonStyle.PRIMARY),
-             styled_button("⟪#𝗫𝗧𝗥⟫ 𝗕𝗢𝗧𝗦", url="https://t.me/XTRBots", style=enums.ButtonStyle.PRIMARY)]
+            [styled_button(
+                "Add Me To Your Group",
+                url=f"https://t.me/{app.username}?startgroup=True",
+                style=enums.ButtonStyle.PRIMARY,
+                icon_custom_emoji_id=5420163708674384414
+            )]
         ])
 
         temp.MELCOW[f"welcome-{member.chat.id}"] = await app.send_photo(

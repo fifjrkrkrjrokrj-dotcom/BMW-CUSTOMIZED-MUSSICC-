@@ -95,10 +95,6 @@ def stream_markup_timer(_, chat_id, played, dur):
             styled_button(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}", style=enums.ButtonStyle.PRIMARY),
             styled_button(text="▢", callback_data=f"ADMIN Stop|{chat_id}", style=enums.ButtonStyle.PRIMARY),
         ],
-        [
-            styled_button(text="💬 sᴜᴘᴘᴏʀᴛ", url=SUPPORT_GROUP, style=enums.ButtonStyle.PRIMARY),
-            styled_button(text="📢 ᴄʜᴀɴɴᴇʟ", url=SUPPORT_CHANNEL, style=enums.ButtonStyle.PRIMARY),
-        ],
         [styled_button(text=_["CLOSE_BUTTON"], callback_data="close", style=enums.ButtonStyle.DANGER)],
     ]
     return buttons

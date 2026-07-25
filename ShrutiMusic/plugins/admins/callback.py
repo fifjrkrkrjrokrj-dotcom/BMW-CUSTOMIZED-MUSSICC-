@@ -48,33 +48,75 @@ async def show_help_page1(client, callback_query: CallbackQuery):
     except:
         _ = get_string("en")
 
-    await callback_query.message.edit_caption(
-        caption=_["help_1"].format(SUPPORT_GROUP),
-        reply_markup=help_pannel_page1(_, START=True)
-    )
+    from pyrogram.types import InputMediaPhoto
+    try:
+        await callback_query.message.edit_media(
+            media=InputMediaPhoto(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
+            reply_markup=help_pannel_page1(_, START=True)
+        )
+    except Exception:
+        try:
+            await callback_query.message.edit_caption(
+                caption=_["help_1"].format(SUPPORT_GROUP),
+                reply_markup=help_pannel_page1(_, START=True)
+            )
+        except Exception:
+            pass
 
 @app.on_callback_query(filters.regex("fork_repo"))
 async def fork_repo_callback(client, query):
-    await query.message.edit_text(
-        text=(
-            "✨ <b>ʙᴜɪʟᴅ Yᴏᴜʀ Oᴡɴ ᴍᴜsɪᴄ ʙᴏᴛ 🎧</b>\n\n"
-            "🚀 ʀᴇᴀᴅʏ ᴛᴏ ʟᴀᴜɴᴄʜ ʏᴏᴜʀ ᴏᴡɴ ʙᴏᴛ?\n"
-            "ғᴏʀᴋ ᴛʜᴇ ʀᴇᴘᴏ ᴀɴᴅ ᴅᴇᴘʟᴏʏ ɪɴ sᴇᴄᴏɴᴅs.\n\n"
-            "🔧 <b>Cᴜsᴛᴏᴍɪᴢᴇ ɪᴛ. Dᴇᴘʟᴏʏ ɪᴛ. Vɪʙᴇ ᴡɪᴛʜ ɪᴛ 🔥</b>"
-        ),
-        disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    styled_button("🚀 Fᴏʀᴋ Rᴇᴘᴏ", url="https://t.me/Katillll", style=enums.ButtonStyle.PRIMARY),
-                    styled_button("⚡ Hᴇʀᴏᴋᴜ Dᴇᴘʟᴏʏ", url="https://t.me/Katillll", style=enums.ButtonStyle.PRIMARY)
-                ],
-                [
-                    styled_button("🔙 Bᴀᴄᴋ", callback_data="settingsback_helper", style=enums.ButtonStyle.PRIMARY)
-                ]
-            ]
-        )
+    from pyrogram.types import InputMediaVideo
+    REPO_VIDEO = "https://files.catbox.moe/x4x2e8.mp4"
+    caption = (
+       "👑 <b>˹ ᴘʀɪᴠᴀᴛᴇ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ˼</b>\n\n"
+       "<blockquote>"
+       "✨ <b>ʜᴇʏ ᴅᴇᴀʀ, ᴛʜᴇ ʀᴇᴘᴏꜱɪᴛᴏʀʏ ᴏꜰ ᴛʜɪꜱ ʙᴏᴛ ɪꜱ ᴘʀɪᴠᴀᴛᴇ ✨</b>\n\n"
+       "🛒 <b>ᴛᴏ ᴘᴜʀᴄʜᴀꜱᴇ ᴛʜᴇ ʟᴀᴛᴇꜱᴛ ᴠᴇʀꜱɪᴏɴ, ᴘʟᴇᴀꜱᴇ ᴄᴏɴᴛᴀᴄᴛ ᴛʜᴇ ᴅᴇᴠᴇʟᴏᴘᴇʀ!</b>\n\n"
+       "🎁 <b>ᴄᴏɴᴛᴀᴄᴛ :</b> <a href='https://t.me/Villaiinn'>@Villaiinn</a>"
+       "</blockquote>"
     )
+    buttons = InlineKeyboardMarkup(
+        [
+            [
+                styled_button(
+                    "👑 Owner",
+                    url="https://t.me/Villaiinn",
+                    style=enums.ButtonStyle.PRIMARY,
+                    icon_custom_emoji_id=6124902618574625426,
+                ),
+                styled_button(
+                    "💸 Buy Now",
+                    url="https://t.me/Villaiinn",
+                    style=enums.ButtonStyle.DANGER,
+                    icon_custom_emoji_id=5409048419211682843,
+                )
+            ],
+            [
+                styled_button(
+                    "🔙 Back",
+                    callback_data="settingsback_helper",
+                    style=enums.ButtonStyle.PRIMARY,
+                    icon_custom_emoji_id=6125103558619568255,
+                )
+            ]
+        ]
+    )
+
+    try:
+        await query.message.edit_media(
+            media=InputMediaVideo(media=REPO_VIDEO, caption=caption),
+            reply_markup=buttons
+        )
+    except Exception:
+        try:
+            await query.message.edit_text(
+                text=caption,
+                reply_markup=buttons
+            )
+        except Exception:
+            pass
+
+
 
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup
@@ -192,10 +234,20 @@ async def show_help_page2(client, callback_query: CallbackQuery):
     except:
         _ = get_string("en")
 
-    await callback_query.message.edit_caption(
-        caption=_["help_1"].format(SUPPORT_GROUP),
-        reply_markup=help_pannel_page2(_, START=True)
-    )
+    from pyrogram.types import InputMediaPhoto
+    try:
+        await callback_query.message.edit_media(
+            media=InputMediaPhoto(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
+            reply_markup=help_pannel_page2(_, START=True)
+        )
+    except Exception:
+        try:
+            await callback_query.message.edit_caption(
+                caption=_["help_1"].format(SUPPORT_GROUP),
+                reply_markup=help_pannel_page2(_, START=True)
+            )
+        except Exception:
+            pass
 
 @app.on_callback_query(filters.regex("help_page_3"))
 async def show_help_page3(client, callback_query: CallbackQuery):
@@ -205,10 +257,20 @@ async def show_help_page3(client, callback_query: CallbackQuery):
     except:
         _ = get_string("en")
 
-    await callback_query.message.edit_caption(
-        caption=_["help_1"].format(SUPPORT_GROUP),
-        reply_markup=help_pannel_page3(_, START=True)
-    )
+    from pyrogram.types import InputMediaPhoto
+    try:
+        await callback_query.message.edit_media(
+            media=InputMediaPhoto(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
+            reply_markup=help_pannel_page3(_, START=True)
+        )
+    except Exception:
+        try:
+            await callback_query.message.edit_caption(
+                caption=_["help_1"].format(SUPPORT_GROUP),
+                reply_markup=help_pannel_page3(_, START=True)
+            )
+        except Exception:
+            pass
 
 @app.on_callback_query(filters.regex("help_page_4"))
 async def show_help_page4(client, callback_query: CallbackQuery):
@@ -218,10 +280,20 @@ async def show_help_page4(client, callback_query: CallbackQuery):
     except:
         _ = get_string("en")
 
-    await callback_query.message.edit_caption(
-        caption=_["help_1"].format(SUPPORT_GROUP),
-        reply_markup=help_pannel_page4(_, START=True)
-    )
+    from pyrogram.types import InputMediaPhoto
+    try:
+        await callback_query.message.edit_media(
+            media=InputMediaPhoto(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
+            reply_markup=help_pannel_page4(_, START=True)
+        )
+    except Exception:
+        try:
+            await callback_query.message.edit_caption(
+                caption=_["help_1"].format(SUPPORT_GROUP),
+                reply_markup=help_pannel_page4(_, START=True)
+            )
+        except Exception:
+            pass
 
 @app.on_callback_query(filters.regex("ADMIN") & ~BANNED_USERS)
 @languageCB

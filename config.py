@@ -37,14 +37,33 @@ group_style = builtins.group_style = random.choice(
 success_style = builtins.success_style = STYLE_SUCCESS
 danger_style = builtins.danger_style = STYLE_DANGER
 
+def clean_button_text(text, has_icon):
+    if not text or not isinstance(text, str) or not has_icon:
+        return text
+    symbols_to_remove = ["➕", "💬", "✙", "📣", "👀", "🥀", "⏮", "⏭", "▶️", "🎶", "⏱", "👤", "🎄", "🎅", "🔔", "📢", "🔍", "⚙️", "🛡️", "👥", "⚙", "🛡", "👑", "💸", "🎀", "🌸", "📂", "🚀", "🌐", "🔙", "🎁", "💎", "⭐", "⭐️", "🌹", "🕯️", "🕯", "🍔", "😇", "😚", "😊", "😮", "✉️", "✉", "🚩", "🖥", "🤙", "➡️", "⬅️", "🦁", "🍭", "🎼", "❤️", "❤", "😧", "😎", "🐦", "🫰", "💘", "🔈", "🥰", "😍", "🧩", "☁️", "☁", "💭", "🔖", "🎙", "🔥", "🌛", "🏠", "🌎", "🛫", "🪙", "🐴", "🕺", "🏊‍♀️", "🏊", "🏹", "🥉", "🚴", "💌", "📥", "📤", "📖", "📚", "🏆", "💡", "🕊️", "🕊"]
+    cleaned = text
+    for symbol in symbols_to_remove:
+        cleaned = cleaned.replace(symbol, "")
+    cleaned = cleaned.strip()
+    if not cleaned:
+        return text
+    return cleaned
+
 def styled_button(text, **kwargs):
-    style = kwargs.pop("style", None)
-    if style is not None:
-        if isinstance(style, str):
-            kwargs["style"] = _STYLE_MAP.get(style.lower(), enums.ButtonStyle.DEFAULT)
-        else:
-            kwargs["style"] = style
-    return InlineKeyboardButton(text=text, **kwargs)
+    style = kwargs.get("style")
+    if isinstance(style, str):
+        kwargs["style"] = _STYLE_MAP.get(style.lower(), enums.ButtonStyle.DEFAULT)
+
+    has_icon = "icon_custom_emoji_id" in kwargs and kwargs["icon_custom_emoji_id"]
+    cleaned_text = clean_button_text(text, has_icon)
+
+    try:
+        return InlineKeyboardButton(text=cleaned_text, **kwargs)
+    except TypeError:
+        kwargs.pop("style", None)
+        kwargs.pop("icon_custom_emoji_id", None)
+        return InlineKeyboardButton(text=text, **kwargs)
+
 
 load_dotenv()
 
@@ -89,7 +108,7 @@ STRING5 = os.getenv("STRING_SESSION5", None)
 
 AUTO_LEAVING_ASSISTANT = bool(os.getenv("AUTO_LEAVING_ASSISTANT", False))
 
-START_IMG_URL = os.getenv("START_IMG_URL", "https://files.catbox.moe/4v1tel.jpg")
+START_IMG_URL = os.getenv("START_IMG_URL", os.path.abspath("elina_banner.png"))
 PING_IMG_URL = "https://files.catbox.moe/pvmze9.jpg"
 PLAYLIST_IMG_URL = "https://files.catbox.moe/d87zj0.jpg"
 STATS_IMG_URL = "https://files.catbox.moe/i691sk.jpg"

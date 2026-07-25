@@ -72,9 +72,12 @@ async def send_repo(_, message: Message):
     await message.reply_video(
         video=REPO_VIDEO,
         caption=(
-           "<b>✨ ʜᴇʏ ᴅᴇᴀʀ, ᴛʜᴇ ʀᴇᴘᴏꜱɪᴛᴏʀʏ ᴏꜰ ᴛʜɪꜱ ʙᴏᴛ ɪꜱ ᴘʀɪᴠᴀᴛᴇ ✨</b>\n\n"
-           "🛒 ᴛᴏ ᴘᴜʀᴄʜᴀꜱᴇ ᴛʜᴇ ʟᴀᴛᴇꜱᴛ ᴠᴇʀꜱɪᴏɴ, ᴘʟᴇᴀꜱᴇ ᴄᴏɴᴛᴀᴄᴛ ᴛʜᴇ ᴅᴇᴠᴇʟᴏᴘᴇʀ!\n\n"
-           "🧡 ᴄᴏɴᴛᴀᴄᴛ : <a href='https://t.me/Villaiinn'>@Villaiinn</a>"
+           "👑 <b>˹ ᴘʀɪᴠᴀᴛᴇ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ˼</b>\n\n"
+           "<blockquote>"
+           "✨ <b>ʜᴇʏ ᴅᴇᴀʀ, ᴛʜᴇ ʀᴇᴘᴏꜱɪᴛᴏʀʏ ᴏꜰ ᴛʜɪꜱ ʙᴏᴛ ɪꜱ ᴘʀɪᴠᴀᴛᴇ ✨</b>\n\n"
+           "🛒 <b>ᴛᴏ ᴘᴜʀᴄʜᴀꜱᴇ ᴛʜᴇ ʟᴀᴛᴇꜱᴛ ᴠᴇʀꜱɪᴏɴ, ᴘʟᴇᴀꜱᴇ ᴄᴏɴᴛᴀᴄᴛ ᴛʜᴇ ᴅᴇᴠᴇʟᴏᴘᴇʀ!</b>\n\n"
+           "🎁 <b>ᴄᴏɴᴛᴀᴄᴛ :</b> <a href='https://t.me/Villaiinn'>@Villaiinn</a>"
+           "</blockquote>"
         ),
         reply_markup=InlineKeyboardMarkup(
             [
@@ -83,11 +86,13 @@ async def send_repo(_, message: Message):
                         "👑 Owner",
                         url="https://t.me/Villaiinn",
                         style=enums.ButtonStyle.PRIMARY,
+                        icon_custom_emoji_id=6124902618574625426,
                     ),
                     styled_button(
                         "💸 Buy Now",
                         url="https://t.me/Villaiinn",
                         style=enums.ButtonStyle.DANGER,
+                        icon_custom_emoji_id=5409048419211682843,
                     )
                 ]
             ]
@@ -95,3 +100,4 @@ async def send_repo(_, message: Message):
         supports_streaming=True,
         has_spoiler=True,
     )
+

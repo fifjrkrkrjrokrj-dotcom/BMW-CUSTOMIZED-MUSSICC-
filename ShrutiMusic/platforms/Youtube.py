@@ -29,7 +29,7 @@ async def download_song(link: str) -> str:
         return file_path
 
     try:
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
             async with session.get(
                 f"{API_URL}/download",
                 params={"url": video_id, "type": "audio", "api_key": API_KEY},
@@ -62,7 +62,7 @@ async def download_video(link: str) -> str:
         return file_path
 
     try:
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
             async with session.get(
                 f"{API_URL}/download",
                 params={"url": video_id, "type": "video", "api_key": API_KEY},

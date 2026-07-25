@@ -4,6 +4,8 @@ from ..logging import LOGGER
 
 def dirr():
     for file in os.listdir():
+        if file == "elina_banner.png":
+            continue
         if file.endswith(".jpg"):
             os.remove(file)
         elif file.endswith(".jpeg"):

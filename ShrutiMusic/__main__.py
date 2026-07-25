@@ -1,5 +1,45 @@
 import asyncio
 import importlib
+import ssl
+
+try:
+    ssl._create_default_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+
+# Bypassing SSL globally for HTTPX (used by py_yt/youtube-search-python)
+import httpx
+_orig_async_init = httpx.AsyncClient.__init__
+def _patched_async_init(self, *args, **kwargs):
+    kwargs["verify"] = False
+    _orig_async_init(self, *args, **kwargs)
+httpx.AsyncClient.__init__ = _patched_async_init
+
+_orig_sync_init = httpx.Client.__init__
+def _patched_sync_init(self, *args, **kwargs):
+    kwargs["verify"] = False
+    _orig_sync_init(self, *args, **kwargs)
+httpx.Client.__init__ = _patched_sync_init
+
+import pyrogram.raw.types
+from pyrogram.raw.types import PeerChat, PeerChannel, PeerUser
+
+
+def _group_call_chat_id(self):
+    peer = getattr(self, "peer", None)
+    if peer:
+        if isinstance(peer, PeerChannel):
+            return peer.channel_id
+        elif isinstance(peer, PeerChat):
+            return peer.chat_id
+        elif isinstance(peer, PeerUser):
+            return peer.user_id
+    return 0
+
+# Monkeypatch UpdateGroupCall to expose chat_id property dynamically
+pyrogram.raw.types.UpdateGroupCall.chat_id = property(_group_call_chat_id)
+
+
 
 from pyrogram import idle
 from pyrogram.types import BotCommand

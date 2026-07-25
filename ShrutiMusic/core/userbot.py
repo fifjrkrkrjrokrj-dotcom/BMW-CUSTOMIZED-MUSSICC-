@@ -71,8 +71,9 @@ class Userbot(Client):
 
             assistantids.append(self.one.id)
 
+            _safe_name = self.one.name.encode("ascii", "backslashreplace").decode("ascii")
             LOGGER(__name__).info(
-                f"Assistant 1 Started as {self.one.name}"
+                f"Assistant 1 Started as {_safe_name} (id={self.one.id})"
             )
 
         if config.STRING2:
