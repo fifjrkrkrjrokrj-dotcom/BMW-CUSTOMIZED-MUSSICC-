@@ -48,10 +48,10 @@ async def show_help_page1(client, callback_query: CallbackQuery):
     except:
         _ = get_string("en")
 
-    from pyrogram.types import InputMediaPhoto
+    from pyrogram.types import InputMediaVideo
     try:
         await callback_query.message.edit_media(
-            media=InputMediaPhoto(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
+            media=InputMediaVideo(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
             reply_markup=help_pannel_page1(_, START=True)
         )
     except Exception:
@@ -61,7 +61,12 @@ async def show_help_page1(client, callback_query: CallbackQuery):
                 reply_markup=help_pannel_page1(_, START=True)
             )
         except Exception:
-            pass
+            try:
+                await callback_query.message.edit_reply_markup(
+                    reply_markup=help_pannel_page1(_, START=True)
+                )
+            except Exception:
+                pass
 
 @app.on_callback_query(filters.regex("fork_repo"))
 async def fork_repo_callback(client, query):
@@ -104,17 +109,23 @@ async def fork_repo_callback(client, query):
 
     try:
         await query.message.edit_media(
-            media=InputMediaVideo(media=REPO_VIDEO, caption=caption),
+            media=InputMediaVideo(media=config.START_IMG_URL, caption=caption),
             reply_markup=buttons
         )
     except Exception:
         try:
-            await query.message.edit_text(
-                text=caption,
+            await query.message.edit_caption(
+                caption=caption,
                 reply_markup=buttons
             )
         except Exception:
-            pass
+            try:
+                await query.message.edit_text(
+                    text=caption,
+                    reply_markup=buttons
+                )
+            except Exception:
+                pass
 
 
 
@@ -234,10 +245,10 @@ async def show_help_page2(client, callback_query: CallbackQuery):
     except:
         _ = get_string("en")
 
-    from pyrogram.types import InputMediaPhoto
+    from pyrogram.types import InputMediaVideo
     try:
         await callback_query.message.edit_media(
-            media=InputMediaPhoto(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
+            media=InputMediaVideo(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
             reply_markup=help_pannel_page2(_, START=True)
         )
     except Exception:
@@ -247,7 +258,12 @@ async def show_help_page2(client, callback_query: CallbackQuery):
                 reply_markup=help_pannel_page2(_, START=True)
             )
         except Exception:
-            pass
+            try:
+                await callback_query.message.edit_reply_markup(
+                    reply_markup=help_pannel_page2(_, START=True)
+                )
+            except Exception:
+                pass
 
 @app.on_callback_query(filters.regex("help_page_3"))
 async def show_help_page3(client, callback_query: CallbackQuery):
@@ -257,10 +273,10 @@ async def show_help_page3(client, callback_query: CallbackQuery):
     except:
         _ = get_string("en")
 
-    from pyrogram.types import InputMediaPhoto
+    from pyrogram.types import InputMediaVideo
     try:
         await callback_query.message.edit_media(
-            media=InputMediaPhoto(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
+            media=InputMediaVideo(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
             reply_markup=help_pannel_page3(_, START=True)
         )
     except Exception:
@@ -270,7 +286,12 @@ async def show_help_page3(client, callback_query: CallbackQuery):
                 reply_markup=help_pannel_page3(_, START=True)
             )
         except Exception:
-            pass
+            try:
+                await callback_query.message.edit_reply_markup(
+                    reply_markup=help_pannel_page3(_, START=True)
+                )
+            except Exception:
+                pass
 
 @app.on_callback_query(filters.regex("help_page_4"))
 async def show_help_page4(client, callback_query: CallbackQuery):
@@ -280,10 +301,10 @@ async def show_help_page4(client, callback_query: CallbackQuery):
     except:
         _ = get_string("en")
 
-    from pyrogram.types import InputMediaPhoto
+    from pyrogram.types import InputMediaVideo
     try:
         await callback_query.message.edit_media(
-            media=InputMediaPhoto(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
+            media=InputMediaVideo(media=config.START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
             reply_markup=help_pannel_page4(_, START=True)
         )
     except Exception:
@@ -293,7 +314,12 @@ async def show_help_page4(client, callback_query: CallbackQuery):
                 reply_markup=help_pannel_page4(_, START=True)
             )
         except Exception:
-            pass
+            try:
+                await callback_query.message.edit_reply_markup(
+                    reply_markup=help_pannel_page4(_, START=True)
+                )
+            except Exception:
+                pass
 
 @app.on_callback_query(filters.regex("ADMIN") & ~BANNED_USERS)
 @languageCB

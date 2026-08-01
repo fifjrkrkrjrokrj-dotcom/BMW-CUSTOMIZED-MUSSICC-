@@ -292,17 +292,20 @@ class Nand(Client):
         return await super().send_message(chat_id, text, *args, **kwargs)
 
     async def edit_message_text(self, chat_id, message_id, text="", *args, **kwargs):
+        msg_text = kwargs.get("text", text)
+        msg_text = transform_custom_emojis(msg_text)
         if "text" in kwargs:
-            kwargs["text"] = transform_custom_emojis(kwargs["text"])
-        elif text:
-            text = transform_custom_emojis(text)
+            kwargs["text"] = msg_text
+        else:
+            text = msg_text
         try:
             return await super().edit_message_text(chat_id, message_id, text, *args, **kwargs)
         except Exception as e:
             try:
-                if "text" in kwargs:
-                    del kwargs["text"]
-                return await super().edit_message_caption(chat_id, message_id, caption=text, *args, **kwargs)
+                new_kwargs = kwargs.copy()
+                if "text" in new_kwargs:
+                    del new_kwargs["text"]
+                return await self.edit_message_caption(chat_id, message_id, caption=msg_text, *args, **new_kwargs)
             except Exception:
                 raise e
 
@@ -315,6 +318,12 @@ class Nand(Client):
         import os
         photo_val = kwargs.get("photo", photo)
         if isinstance(photo_val, str):
+            clean_url = photo_val.split('?')[0].lower()
+            if clean_url.endswith((".mp4", ".mkv", ".webm", ".mov")):
+                if "photo" in kwargs:
+                    del kwargs["photo"]
+                return await self.send_video(chat_id, video=photo_val, caption=caption, *args, **kwargs)
+
             photo_val = photo_val.replace("\\", "/")
             if not photo_val.startswith(("http://", "https://")):
                 if os.path.exists(photo_val):

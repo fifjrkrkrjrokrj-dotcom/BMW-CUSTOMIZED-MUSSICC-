@@ -81,47 +81,21 @@ from config import BANNED_USERS, START_IMG_URL, SUPPORT_GROUP
 from strings import get_string, helpers
 
 @app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
-@app.on_callback_query(filters.regex("help_page_1") & ~BANNED_USERS)
 async def helper_private(
-    client: app, update: Union[types.Message, types.CallbackQuery]
+    client: app, update: types.Message
 ):
-    is_callback = isinstance(update, types.CallbackQuery)
-    if is_callback:
-        try:
-            await update.answer()
-        except:
-            pass
-        chat_id = update.message.chat.id
-        language = await get_lang(chat_id)
-        _ = get_string(language)
-        keyboard = help_pannel_page1(_, True)
-        try:
-            await update.message.edit_caption(
-                caption=_["help_1"].format(SUPPORT_GROUP),
-                reply_markup=keyboard
-            )
-        except Exception:
-            try:
-                await update.edit_message_text(
-                    text=_["help_1"].format(SUPPORT_GROUP),
-                    reply_markup=keyboard
-                )
-            except Exception:
-                pass
-
-    else:
-        try:
-            await update.delete()
-        except:
-            pass
-        language = await get_lang(update.chat.id)
-        _ = get_string(language)
-        keyboard = help_pannel_page1(_)
-        await update.reply_photo(
-            photo=START_IMG_URL,
-            caption=_["help_1"].format(SUPPORT_GROUP),
-            reply_markup=keyboard,
-        )
+    try:
+        await update.delete()
+    except:
+        pass
+    language = await get_lang(update.chat.id)
+    _ = get_string(language)
+    keyboard = help_pannel_page1(_)
+    await update.reply_photo(
+        photo=START_IMG_URL,
+        caption=_["help_1"].format(SUPPORT_GROUP),
+        reply_markup=keyboard,
+    )
 
 @app.on_message(filters.command(["help"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
