@@ -296,7 +296,15 @@ class Nand(Client):
             kwargs["text"] = transform_custom_emojis(kwargs["text"])
         elif text:
             text = transform_custom_emojis(text)
-        return await super().edit_message_text(chat_id, message_id, text, *args, **kwargs)
+        try:
+            return await super().edit_message_text(chat_id, message_id, text, *args, **kwargs)
+        except Exception as e:
+            try:
+                if "text" in kwargs:
+                    del kwargs["text"]
+                return await super().edit_message_caption(chat_id, message_id, caption=text, *args, **kwargs)
+            except Exception:
+                raise e
 
     async def send_photo(self, chat_id, photo, caption="", *args, **kwargs):
         if "caption" in kwargs:

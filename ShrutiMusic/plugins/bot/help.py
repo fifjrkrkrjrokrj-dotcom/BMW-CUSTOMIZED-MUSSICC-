@@ -95,16 +95,16 @@ async def helper_private(
         language = await get_lang(chat_id)
         _ = get_string(language)
         keyboard = help_pannel_page1(_, True)
-        from pyrogram.types import InputMediaPhoto
         try:
-            await update.message.edit_media(
-                media=InputMediaPhoto(media=START_IMG_URL, caption=_["help_1"].format(SUPPORT_GROUP)),
+            await update.message.edit_caption(
+                caption=_["help_1"].format(SUPPORT_GROUP),
                 reply_markup=keyboard
             )
         except Exception:
             try:
                 await update.edit_message_text(
-                    _["help_1"].format(SUPPORT_GROUP), reply_markup=keyboard
+                    text=_["help_1"].format(SUPPORT_GROUP),
+                    reply_markup=keyboard
                 )
             except Exception:
                 pass
@@ -196,5 +196,17 @@ async def helper_cb(client, CallbackQuery, _):
     if cb in help_map:
         text = help_map[cb]
         wrapped_text = format_help_text(text)
-        await CallbackQuery.edit_message_text(wrapped_text, reply_markup=get_keyboard_for(cb))
+        try:
+            await CallbackQuery.message.edit_caption(
+                caption=wrapped_text,
+                reply_markup=get_keyboard_for(cb)
+            )
+        except Exception:
+            try:
+                await CallbackQuery.edit_message_text(
+                    text=wrapped_text,
+                    reply_markup=get_keyboard_for(cb)
+                )
+            except Exception:
+                pass
 
