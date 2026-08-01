@@ -84,7 +84,7 @@ UPSTREAM_BRANCH = os.getenv("UPSTREAM_BRANCH", "main")
 GIT_TOKEN = os.getenv("GIT_TOKEN", None)
 
 SUPPORT_CHANNEL = os.getenv("SUPPORT_CHANNEL", "https://t.me/xtrchannel")
-SUPPORT_GROUP = os.getenv("SUPPORT_GROUP", "https://t.me/+efztCDwyatE5NDcy")
+SUPPORT_GROUP = os.getenv("SUPPORT_GROUP", os.getenv("SUPPORT_CHAT", "https://t.me/+efztCDwyatE5NDcy"))
 INSTAGRAM = os.getenv("INSTAGRAM", "https://t.me/XTRGiveaways")
 YOUTUBE = os.getenv("YOUTUBE", "https://t.me/XTRBots")
 GITHUB = os.getenv("GITHUB", "https://t.me/XTR_Net")

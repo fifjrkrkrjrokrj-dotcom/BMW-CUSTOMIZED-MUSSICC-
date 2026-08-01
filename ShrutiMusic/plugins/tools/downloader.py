@@ -63,20 +63,18 @@ from pyrogram import enums
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from ShrutiMusic import app
 
-from config import styled_button
-
-REPO_VIDEO = "https://files.catbox.moe/x4x2e8.mp4"
+from config import styled_button, START_IMG_URL
 
 @app.on_message(filters.command(["repo", "source"]))
 async def send_repo(_, message: Message):
     await message.reply_video(
-        video=REPO_VIDEO,
+        video=START_IMG_URL,
         caption=(
            "👑 <b>˹ ᴘʀɪᴠᴀᴛᴇ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ˼</b>\n\n"
            "<blockquote>"
            "✨ <b>ʜᴇʏ ᴅᴇᴀʀ, ᴛʜᴇ ʀᴇᴘᴏꜱɪᴛᴏʀʏ ᴏꜰ ᴛʜɪꜱ ʙᴏᴛ ɪꜱ ᴘʀɪᴠᴀᴛᴇ ✨</b>\n\n"
            "🛒 <b>ᴛᴏ ᴘᴜʀᴄʜᴀꜱᴇ ᴛʜᴇ ʟᴀᴛᴇꜱᴛ ᴠᴇʀꜱɪᴏɴ, ᴘʟᴇᴀꜱᴇ ᴄᴏɴᴛᴀᴄᴛ ᴛʜᴇ ᴅᴇᴠᴇʟᴏᴘᴇʀ!</b>\n\n"
-           "🎁 <b>ᴄᴏɴᴛᴀᴄᴛ :</b> <a href='https://t.me/Villaiinn'>@Villaiinn</a>"
+           "🎁 <b>ᴄᴏɴᴛᴀᴄᴛ :</b> <a href='https://t.me/Blaze_VX'>@Blaze_VX</a>"
            "</blockquote>"
         ),
         reply_markup=InlineKeyboardMarkup(
@@ -84,13 +82,13 @@ async def send_repo(_, message: Message):
                 [
                     styled_button(
                         "👑 Owner",
-                        url="https://t.me/Villaiinn",
+                        url="https://t.me/Blaze_VX",
                         style=enums.ButtonStyle.PRIMARY,
                         icon_custom_emoji_id=6124902618574625426,
                     ),
                     styled_button(
                         "💸 Buy Now",
-                        url="https://t.me/Villaiinn",
+                        url="https://t.me/Blaze_VX",
                         style=enums.ButtonStyle.DANGER,
                         icon_custom_emoji_id=5409048419211682843,
                     )
