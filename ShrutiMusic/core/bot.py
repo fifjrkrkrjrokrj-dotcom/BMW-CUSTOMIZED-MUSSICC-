@@ -317,7 +317,24 @@ class Nand(Client):
                         photo = opened_file
         return await super().send_photo(chat_id, photo, caption, *args, **kwargs)
 
+    async def send_video(self, chat_id, video, caption="", *args, **kwargs):
+        if "caption" in kwargs:
+            kwargs["caption"] = transform_custom_emojis(kwargs["caption"])
+        elif caption:
+            caption = transform_custom_emojis(caption)
 
+        import os
+        video_val = kwargs.get("video", video)
+        if isinstance(video_val, str):
+            video_val = video_val.replace("\\", "/")
+            if not video_val.startswith(("http://", "https://")):
+                if os.path.exists(video_val):
+                    opened_file = open(video_val, "rb")
+                    if "video" in kwargs:
+                        kwargs["video"] = opened_file
+                    else:
+                        video = opened_file
+        return await super().send_video(chat_id, video, caption, *args, **kwargs)
 
     async def edit_message_caption(self, chat_id, message_id, caption="", *args, **kwargs):
         if "caption" in kwargs:
@@ -380,9 +397,9 @@ class Nand(Client):
 
         if config.LOG_GROUP_ID:
             try:
-                await self.send_photo(
+                await self.send_video(
                     config.LOG_GROUP_ID,
-                    photo=config.START_IMG_URL,
+                    video=config.START_IMG_URL,
                     caption=f"<b>🎵 Bot Started Successfully</b>\n\n"
                             f"<b>Name:</b> {self.name}\n"
                             f"<b>Username:</b> @{self.username}\n"
