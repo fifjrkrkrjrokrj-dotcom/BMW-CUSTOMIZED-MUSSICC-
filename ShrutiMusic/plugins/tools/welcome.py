@@ -8,6 +8,7 @@ from ShrutiMusic import LOGGER
 from ShrutiMusic.misc import SUDOERS
 from ShrutiMusic import app
 from ShrutiMusic.utils.database import welcomedb
+import config
 from config import styled_button
 
 LOGGER = getLogger(__name__)
@@ -139,9 +140,9 @@ async def greet_group(_, member: ChatMemberUpdated):
             )]
         ])
 
-        temp.MELCOW[f"welcome-{member.chat.id}"] = await app.send_photo(
+        temp.MELCOW[f"welcome-{member.chat.id}"] = await app.send_video(
             member.chat.id,
-            photo=welcomeimg,
+            video=config.PING_IMG_URL,
             caption=caption,
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
@@ -149,9 +150,3 @@ async def greet_group(_, member: ChatMemberUpdated):
 
     except Exception as e:
         LOGGER.error(e)
-
-    try:
-        os.remove(f"downloads/welcome#{user.id}.png")
-        os.remove(f"downloads/pp{user.id}.png")
-    except Exception:
-        pass

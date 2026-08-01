@@ -235,11 +235,26 @@ def transform_custom_emojis(text: str) -> str:
         return text
     # Always process markdown shorthand
     text = re.sub(r'!\[(.*?)\]\(tg://emoji\?id=(\d+)\)', r'<tg-emoji emoji-id="\2">\1</tg-emoji>', text)
+    
     # Only inject premium emoji tags when owner is premium
     if OWNER_IS_PREMIUM:
+        placeholders = {}
+        def save_tag(match):
+            idx = f"__TGE_{len(placeholders)}__"
+            placeholders[idx] = match.group(0)
+            return idx
+            
+        # Temporarily remove existing tg-emoji tags to avoid nested replacements
+        text = re.sub(r'<tg-emoji[^>]*>.*?</tg-emoji>', save_tag, text)
+        
         for emoji, emoji_id in sorted(EMOJI_PREMIUM_MAP.items(), key=lambda x: len(x[0]), reverse=True):
-            if emoji in text and f'emoji-id="{emoji_id}"' not in text:
+            if emoji in text:
                 text = text.replace(emoji, f'<tg-emoji emoji-id="{emoji_id}">{emoji}</tg-emoji>')
+                
+        # Restore tags
+        for idx, tag in placeholders.items():
+            text = text.replace(idx, tag)
+            
     return text
 
 

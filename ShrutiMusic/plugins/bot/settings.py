@@ -79,21 +79,21 @@ async def settings_back_markup(client, CallbackQuery: CallbackQuery, _):
         OWNER = OWNER_ID
         buttons = private_panel(_)
         caption = (
-            f'<tg-emoji emoji-id="6124902618574625426">👑</tg-emoji> <b>Welcome to the Future of Music Streaming!</b>\n\n'
-            f"<blockquote>"
-            f'<tg-emoji emoji-id="5413694143601842851">👋</tg-emoji> ʜᴇʏ {CallbackQuery.from_user.mention},\n'
-            f"ɪ ᴀᴍ <b>{app.mention}</b> — your ultimate high-fidelity premium music assistant."
-            f"</blockquote>\n\n"
-            f"<blockquote>"
-            f'<tg-emoji emoji-id="6125239923831217642">✨</tg-emoji> <b>Premium Features Enabled</b>\n'
-            f'• <tg-emoji emoji-id="5814498932591432312">🔊</tg-emoji> Ultra HD 320kbps Audio Quality\n'
-            f'• <tg-emoji emoji-id="5271721134889395048">🎥</tg-emoji> Lag-Free 1080p Video Streaming\n'
-            f'• <tg-emoji emoji-id="6124898345082165755">⚡</tg-emoji> Instant Play & Zero Buffering\n'
-            f'• <tg-emoji emoji-id="5251203410396458957">🛡️</tg-emoji> Anti-Crash Protection Active'
-            f"</blockquote>\n\n"
-            f"<blockquote>"
-            f'<tg-emoji emoji-id="5814498932591432312">🎧</tg-emoji> <b>Supports:</b> YouTube • Spotify • Apple Music • Soundcloud • Index/M3u8 Links'
-            f"</blockquote>\n"
+            f"🦋 ʜєʏ {CallbackQuery.from_user.mention} ᴡєʟᴄᴏϻє ᴛᴏ {app.mention}\n"
+            f"ʜᴏᴡ αʀє ʏᴏᴜ\n"
+            f"ᴛʜɪs ɪs  {app.mention}\n"
+            f"— — — — — — — —\n"
+            f"❤️🔥 ᴛʜɪs ɪs ϻυsɪᴄ ʙσᴛ\n"
+            f"✨ ησ ʟᴧɢ | ᴧᴅs ϻυsɪᴄ | ησ ᴘʀσϻσ\n"
+            f"🙂 24x7 ʀυη | ʙєsᴛ sσυηᴅ ǫυᴧʟɪᴛʏ\n"
+            f"📼 ᴜsᴇʀ: {CallbackQuery.from_user.mention}\n"
+            f"🕊 ʙᴏᴛ ηᴧϻє: {app.mention}\n"
+            f"— — — — — — — —\n"
+            f"🎀 ᴄʟɪᴄᴋ ση ᴛʜє ʜєʟᴩ ʙυᴛᴛση ᴛσ ɢєᴛ ɪηғσ\n"
+            f"ᴧʙσυᴛ ϻʏ ϻσᴅυʟєs ᴧηᴅ ᴄσϻϻᴧηᴅs...!\n"
+            f"📌 ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅs\n"
+            f"— — — — — — — —\n"
+            f"💖 ᴇɴᴊᴏʏ ɴᴏɴsᴛᴏᴘ ᴍᴜsɪᴄ ᴡɪᴛʜ {app.mention}"
         )
         try:
             return await CallbackQuery.edit_message_text(

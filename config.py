@@ -108,9 +108,13 @@ STRING5 = os.getenv("STRING_SESSION5", None)
 
 AUTO_LEAVING_ASSISTANT = bool(os.getenv("AUTO_LEAVING_ASSISTANT", False))
 
-START_IMG_URL = os.getenv("START_IMG_URL", os.path.abspath("elina_banner.png"))
-PING_IMG_URL = "https://files.catbox.moe/pvmze9.jpg"
-PLAYLIST_IMG_URL = "https://files.catbox.moe/d87zj0.jpg"
+START_IMG_URL = os.getenv(
+    "START_IMG_URL", "https://files.catbox.moe/fpu6ow.mp4"
+)
+PING_IMG_URL = os.getenv(
+    "PING_IMG_URL", "https://image-link.edgeone.app/1785548300301-hgwbs2.mp4"
+)
+PLAYLIST_IMG_URL = "https://files.catbox.moe/pvmze9.jpg"
 STATS_IMG_URL = "https://files.catbox.moe/i691sk.jpg"
 TELEGRAM_AUDIO_URL = "https://files.catbox.moe/l6mbl9.jpg"
 TELEGRAM_VIDEO_URL = "https://files.catbox.moe/knsvch.jpg"

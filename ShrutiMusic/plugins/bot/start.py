@@ -29,21 +29,21 @@ from config import styled_button
 def _make_start_text_pm(_, mention, bot_mention, UP=None, DISK=None, CPU=None, RAM=None):
     """Super premium private start message with gorgeous blockquotes and premium custom emojis."""
     return (
-        f'<tg-emoji emoji-id="6124902618574625426">👑</tg-emoji> <b>Welcome to the Future of Music Streaming!</b>\n\n'
-        f"<blockquote>"
-        f'<tg-emoji emoji-id="5413694143601842851">👋</tg-emoji> ʜᴇʏ {mention},\n'
-        f"ɪ ᴀᴍ <b>{bot_mention}</b> — your ultimate high-fidelity premium music assistant."
-        f"</blockquote>\n\n"
-        f"<blockquote>"
-        f'<tg-emoji emoji-id="6125239923831217642">✨</tg-emoji> <b>Premium Features Enabled</b>\n'
-        f'• <tg-emoji emoji-id="5814498932591432312">🔊</tg-emoji> Ultra HD 320kbps Audio Quality\n'
-        f'• <tg-emoji emoji-id="5271721134889395048">🎥</tg-emoji> Lag-Free 1080p Video Streaming\n'
-        f'• <tg-emoji emoji-id="6124898345082165755">⚡</tg-emoji> Instant Play & Zero Buffering\n'
-        f'• <tg-emoji emoji-id="5251203410396458957">🛡️</tg-emoji> Anti-Crash Protection Active'
-        f"</blockquote>\n\n"
-        f"<blockquote>"
-        f'<tg-emoji emoji-id="5814498932591432312">🎧</tg-emoji> <b>Supports:</b> YouTube • Spotify • Apple Music • Soundcloud • Index/M3u8 Links'
-        f"</blockquote>\n"
+        f'<tg-emoji emoji-id="6231174832625552804">🦋</tg-emoji> ʜєʏ {mention} ᴡєʟᴄᴏϻє ᴛᴏ {bot_mention}\n'
+        f"ʜᴏᴡ αʀє ʏᴏᴜ\n"
+        f"ᴛʜɪs ɪs  {bot_mention}\n"
+        f"— — — — — — — —\n"
+        f'<tg-emoji emoji-id="5913546818376964276">❤️</tg-emoji><tg-emoji emoji-id="5424972470023104089">🔥</tg-emoji> ᴛʜɪs ɪs ϻυsɪᴄ ʙσᴛ\n'
+        f'<tg-emoji emoji-id="6125239923831217642">✨</tg-emoji> ησ ʟᴧɢ | ᴧᴅs ϻυsɪᴄ | ησ ᴘʀσϻσ\n'
+        f'<tg-emoji emoji-id="5461117441612462242">🙂</tg-emoji> 24x7 ʀυη | ʙєsᴛ sσυηᴅ ǫυᴧʟɪᴛʏ\n'
+        f'<tg-emoji emoji-id="5271721134889395048">📼</tg-emoji> ᴜsᴇʀ: {mention}\n'
+        f'<tg-emoji emoji-id="5429472766820628204">🕊</tg-emoji> ʙᴏᴛ ηᴧϻє: {bot_mention}\n'
+        f"— — — — — — — —\n"
+        f'<tg-emoji emoji-id="6231271181626903902">🎀</tg-emoji> ᴄʟɪᴄᴋ ση ᴛʜє ʜєʟᴩ ʙυᴛᴛση ᴛσ ɢєᴛ ɪηғσ\n'
+        f"ᴧʙσυᴛ ϻʏ ϻσᴅυʟєs ᴧηᴅ ᴄσϻϻᴧηᴅs...!\n"
+        f'<tg-emoji emoji-id="5397782960512444700">📌</tg-emoji> ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅs\n'
+        f"— — — — — — — —\n"
+        f'<tg-emoji emoji-id="6127558265573218459">💖</tg-emoji> ᴇɴᴊᴏʏ ɴᴏɴsᴛᴏᴘ ᴍᴜsɪᴄ ᴡɪᴛʜ {bot_mention}'
     )
 
 
@@ -76,15 +76,13 @@ async def start_pm(client, message: Message, _):
         if name[0:4] == "help":
             keyboard = help_pannel_page1(_)
             try:
-                return await message.reply_photo(
-                    photo=config.START_IMG_URL,
+                return await message.reply_video(video=config.START_IMG_URL,
                     caption=_["help_1"].format(config.SUPPORT_GROUP),
                     reply_markup=keyboard,
                     message_effect_id=5159385139981059251,
                 )
             except:
-                return await message.reply_photo(
-                    photo=config.START_IMG_URL,
+                return await message.reply_video(video=config.START_IMG_URL,
                     caption=_["help_1"].format(config.SUPPORT_GROUP),
                     reply_markup=keyboard,
                 )
@@ -149,15 +147,13 @@ async def start_pm(client, message: Message, _):
                 _, message.from_user.mention, app.mention, UP, DISK, CPU, RAM
             )
             try:
-                await message.reply_photo(
-                    photo=config.START_IMG_URL,
+                await message.reply_video(video=config.START_IMG_URL,
                     caption=caption,
                     reply_markup=InlineKeyboardMarkup(out),
                     message_effect_id=5159385139981059251,
                 )
             except:
-                await message.reply_photo(
-                    photo=config.START_IMG_URL,
+                await message.reply_video(video=config.START_IMG_URL,
                     caption=caption,
                     reply_markup=InlineKeyboardMarkup(out),
                 )
@@ -173,15 +169,13 @@ async def start_pm(client, message: Message, _):
             _, message.from_user.mention, app.mention, UP, DISK, CPU, RAM
         )
         try:
-            await message.reply_photo(
-                photo=config.START_IMG_URL,
+            await message.reply_video(video=config.START_IMG_URL,
                 caption=caption,
                 reply_markup=InlineKeyboardMarkup(out),
                 message_effect_id=5159385139981059251,
             )
         except:
-            await message.reply_photo(
-                photo=config.START_IMG_URL,
+            await message.reply_video(video=config.START_IMG_URL,
                 caption=caption,
                 reply_markup=InlineKeyboardMarkup(out),
             )
@@ -198,15 +192,13 @@ async def start_gp(client, message: Message, _):
     uptime = int(time.time() - _boot_)
     caption = _make_start_text_group(_, app.mention, get_readable_time(uptime))
     try:
-        await message.reply_photo(
-            photo=config.START_IMG_URL,
+        await message.reply_video(video=config.START_IMG_URL,
             caption=caption,
             reply_markup=InlineKeyboardMarkup(out),
             message_effect_id=5159385139981059251,
         )
     except:
-        await message.reply_photo(
-            photo=config.START_IMG_URL,
+        await message.reply_video(video=config.START_IMG_URL,
             caption=caption,
             reply_markup=InlineKeyboardMarkup(out),
         )
@@ -246,15 +238,13 @@ async def welcome(client, message: Message):
                     pass
                 caption = _make_start_text_group(_, app.mention, get_readable_time(uptime))
                 try:
-                    await message.reply_photo(
-                        photo=config.START_IMG_URL,
+                    await message.reply_video(video=config.START_IMG_URL,
                         caption=caption,
                         reply_markup=InlineKeyboardMarkup(out),
                         message_effect_id=5159385139981059251,
                     )
                 except:
-                    await message.reply_photo(
-                        photo=config.START_IMG_URL,
+                    await message.reply_video(video=config.START_IMG_URL,
                         caption=caption,
                         reply_markup=InlineKeyboardMarkup(out),
                     )
