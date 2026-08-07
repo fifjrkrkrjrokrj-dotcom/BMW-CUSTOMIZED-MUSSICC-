@@ -126,7 +126,7 @@ SPOTIFY_ALBUM_IMG_URL = "https://files.catbox.moe/p46q1g.jpg"
 SPOTIFY_PLAYLIST_IMG_URL = "https://files.catbox.moe/p46q1g.jpg"
 
 BANNED_USERS = filters.user()
-adminlist = {8137943198}
+adminlist = {}
 lyrical = {}
 votemode = {}
 autoclean = []
