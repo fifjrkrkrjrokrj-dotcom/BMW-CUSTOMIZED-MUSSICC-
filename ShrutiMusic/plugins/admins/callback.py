@@ -77,7 +77,7 @@ async def fork_repo_callback(client, query):
        "<blockquote>"
        "✨ <b>ʜᴇʏ ᴅᴇᴀʀ, ᴛʜᴇ ʀᴇᴘᴏꜱɪᴛᴏʀʏ ᴏꜰ ᴛʜɪꜱ ʙᴏᴛ ɪꜱ ᴘʀɪᴠᴀᴛᴇ ✨</b>\n\n"
        "🛒 <b>ᴛᴏ ᴘᴜʀᴄʜᴀꜱᴇ ᴛʜᴇ ʟᴀᴛᴇꜱᴛ ᴠᴇʀꜱɪᴏɴ, ᴘʟᴇᴀꜱᴇ ᴄᴏɴᴛᴀᴄᴛ ᴛʜᴇ ᴅᴇᴠᴇʟᴏᴘᴇʀ!</b>\n\n"
-       "🎁 <b>ᴄᴏɴᴛᴀᴄᴛ :</b> <a href='https://t.me/Blaze_VX'>@Blaze_VX</a>"
+       "🎁 <b>ᴄᴏɴᴛᴀᴄᴛ :</b> <a href='https://t.me/Villaiinn'>@V90001</a>"
        "</blockquote>"
     )
     buttons = InlineKeyboardMarkup(
@@ -85,13 +85,13 @@ async def fork_repo_callback(client, query):
             [
                 styled_button(
                     "👑 Owner",
-                    url="https://t.me/Blaze_VX",
+                    url="https://t.me/Villaiinn",
                     style=enums.ButtonStyle.PRIMARY,
                     icon_custom_emoji_id=6124902618574625426,
                 ),
                 styled_button(
                     "💸 Buy Now",
-                    url="https://t.me/Blaze_VX",
+                    url="https://t.me/Villaiinnn",
                     style=enums.ButtonStyle.DANGER,
                     icon_custom_emoji_id=5409048419211682843,
                 )
