@@ -163,6 +163,13 @@ async def init():
         "Assistant Started!"
     )
 
+    try:
+        await Nand.decorators()
+    except Exception as e:
+        LOGGER("ShrutiMusic").error(
+            f"Decorator Error : {e}"
+        )
+
     await Nand.start()
 
     LOGGER("ShrutiMusic").info(
@@ -184,15 +191,6 @@ async def init():
 
         LOGGER("ShrutiMusic").error(
             f"VC Error : {e}"
-        )
-
-    try:
-        await Nand.decorators()
-
-    except Exception as e:
-
-        LOGGER("ShrutiMusic").error(
-            f"Decorator Error : {e}"
         )
 
     LOGGER("ShrutiMusic").info(

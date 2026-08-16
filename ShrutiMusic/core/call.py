@@ -14,7 +14,7 @@ from pytgcalls.exceptions import (
 from pytgcalls.types import Update
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
 from pytgcalls.types.input_stream.quality import HighQualityAudio, MediumQualityVideo
-from pytgcalls.types.stream import StreamAudioEnded
+from pytgcalls.types.stream import StreamAudioEnded, StreamVideoEnded
 
 from pytgcalls.file_manager import FileManager
 _original_check_file_exist = FileManager.check_file_exist
@@ -627,7 +627,7 @@ class Call(PyTgCalls):
         @self.four.on_stream_end()
         @self.five.on_stream_end()
         async def stream_end_handler1(client, update: Update):
-            if not isinstance(update, StreamAudioEnded):
+            if not isinstance(update, (StreamAudioEnded, StreamVideoEnded)):
                 return
             await self.change_stream(client, update.chat_id)
 

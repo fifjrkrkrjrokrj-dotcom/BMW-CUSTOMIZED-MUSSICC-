@@ -20,6 +20,7 @@
 # Email: badboy809075@gmail.com
 
 
+from pyrogram import enums
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
