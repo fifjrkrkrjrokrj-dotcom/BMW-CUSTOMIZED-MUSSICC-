@@ -15,15 +15,25 @@ async def download_file_locally(url: str, suffix: str = ".jpg") -> str:
     import tempfile
     import aiohttp
     import aiofiles
+    
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    timeout = aiohttp.ClientTimeout(total=120)
+    connector = aiohttp.TCPConnector(ssl=False)
+    
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, timeout=15) as response:
+        async with aiohttp.ClientSession(headers=headers, connector=connector, timeout=timeout) as session:
+            async with session.get(url) as response:
                 if response.status == 200:
                     fd, temp_path = tempfile.mkstemp(suffix=suffix)
                     os.close(fd)
                     async with aiofiles.open(temp_path, mode='wb') as f:
-                        await f.write(await response.read())
+                        async for chunk in response.content.iter_chunked(4096):
+                            await f.write(chunk)
                     return temp_path
+                else:
+                    LOGGER(__name__).warning(f"Failed to download {url}: HTTP {response.status}")
     except Exception as e:
         LOGGER(__name__).warning(f"Failed to download remote file {url}: {e}")
     return None
