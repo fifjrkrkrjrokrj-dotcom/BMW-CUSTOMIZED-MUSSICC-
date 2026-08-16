@@ -10,6 +10,25 @@ from config import styled_button
 
 OWNER_IS_PREMIUM = True
 
+async def download_file_locally(url: str, suffix: str = ".jpg") -> str:
+    import os
+    import tempfile
+    import aiohttp
+    import aiofiles
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, timeout=15) as response:
+                if response.status == 200:
+                    fd, temp_path = tempfile.mkstemp(suffix=suffix)
+                    os.close(fd)
+                    async with aiofiles.open(temp_path, mode='wb') as f:
+                        await f.write(await response.read())
+                    return temp_path
+    except Exception as e:
+        LOGGER(__name__).warning(f"Failed to download remote file {url}: {e}")
+    return None
+
+
 EMOJI_PREMIUM_MAP = {
     "⏱": 5458640241915084025,
     "✨": 6111831431070094156,
@@ -317,6 +336,7 @@ class Nand(Client):
 
         import os
         photo_val = kwargs.get("photo", photo)
+        is_url = False
         if isinstance(photo_val, str):
             clean_url = photo_val.split('?')[0].lower()
             if clean_url.endswith((".mp4", ".mkv", ".webm", ".mov")):
@@ -325,14 +345,42 @@ class Nand(Client):
                 return await self.send_video(chat_id, video=photo_val, caption=caption, *args, **kwargs)
 
             photo_val = photo_val.replace("\\", "/")
-            if not photo_val.startswith(("http://", "https://")):
+            if photo_val.startswith(("http://", "https://")):
+                is_url = True
+            else:
                 if os.path.exists(photo_val):
                     opened_file = open(photo_val, "rb")
                     if "photo" in kwargs:
                         kwargs["photo"] = opened_file
                     else:
                         photo = opened_file
-        return await super().send_photo(chat_id, photo, caption, *args, **kwargs)
+
+        try:
+            return await super().send_photo(chat_id, photo, caption, *args, **kwargs)
+        except Exception as e:
+            if is_url:
+                LOGGER(__name__).warning(f"Failed to send remote photo {photo_val} due to {e}. Downloading locally...")
+                suffix = "." + clean_url.split(".")[-1] if "." in clean_url else ".jpg"
+                local_file = await download_file_locally(photo_val, suffix)
+                if local_file:
+                    try:
+                        if "photo" in kwargs:
+                            kwargs["photo"] = open(local_file, "rb")
+                        else:
+                            photo = open(local_file, "rb")
+                        res = await super().send_photo(chat_id, photo, caption, *args, **kwargs)
+                        try:
+                            os.remove(local_file)
+                        except:
+                            pass
+                        return res
+                    except Exception as err:
+                        LOGGER(__name__).error(f"Failed to send downloaded photo: {err}")
+                        try:
+                            os.remove(local_file)
+                        except:
+                            pass
+            raise e
 
     async def send_video(self, chat_id, video, caption="", *args, **kwargs):
         if "caption" in kwargs:
@@ -342,16 +390,46 @@ class Nand(Client):
 
         import os
         video_val = kwargs.get("video", video)
+        is_url = False
         if isinstance(video_val, str):
+            clean_url = video_val.split('?')[0].lower()
             video_val = video_val.replace("\\", "/")
-            if not video_val.startswith(("http://", "https://")):
+            if video_val.startswith(("http://", "https://")):
+                is_url = True
+            else:
                 if os.path.exists(video_val):
                     opened_file = open(video_val, "rb")
                     if "video" in kwargs:
                         kwargs["video"] = opened_file
                     else:
                         video = opened_file
-        return await super().send_video(chat_id, video, caption, *args, **kwargs)
+
+        try:
+            return await super().send_video(chat_id, video, caption, *args, **kwargs)
+        except Exception as e:
+            if is_url:
+                LOGGER(__name__).warning(f"Failed to send remote video {video_val} due to {e}. Downloading locally...")
+                suffix = "." + clean_url.split(".")[-1] if "." in clean_url else ".mp4"
+                local_file = await download_file_locally(video_val, suffix)
+                if local_file:
+                    try:
+                        if "video" in kwargs:
+                            kwargs["video"] = open(local_file, "rb")
+                        else:
+                            video = open(local_file, "rb")
+                        res = await super().send_video(chat_id, video, caption, *args, **kwargs)
+                        try:
+                            os.remove(local_file)
+                        except:
+                            pass
+                        return res
+                    except Exception as err:
+                        LOGGER(__name__).error(f"Failed to send downloaded video: {err}")
+                        try:
+                            os.remove(local_file)
+                        except:
+                            pass
+            raise e
 
     async def edit_message_caption(self, chat_id, message_id, caption="", *args, **kwargs):
         if "caption" in kwargs:
@@ -365,12 +443,7 @@ class Nand(Client):
             media.caption = transform_custom_emojis(media.caption)
         return await super().edit_message_media(chat_id, message_id, media, *args, **kwargs)
 
-    async def send_video(self, chat_id, video, caption="", *args, **kwargs):
-        if "caption" in kwargs:
-            kwargs["caption"] = transform_custom_emojis(kwargs["caption"])
-        elif caption:
-            caption = transform_custom_emojis(caption)
-        return await super().send_video(chat_id, video, caption, *args, **kwargs)
+
 
     async def send_audio(self, chat_id, audio, caption="", *args, **kwargs):
         if "caption" in kwargs:
